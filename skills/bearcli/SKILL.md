@@ -1,7 +1,7 @@
 ---
-name: bear-notes
-description: Read, search, create, and edit Bear notes via bearcli.
-version: 0.1.0
+name: bearcli
+description: Read, search, create, and edit Bear notes via Shiny Frog's official bearcli (Bear 2.8+).
+version: 0.2.0
 author: neo-anderson
 license: MIT
 platforms: [macos]
@@ -16,7 +16,9 @@ metadata:
 ---
 # Bear Notes (bearcli)
 
-Drive the local Bear notes database through `bearcli`, the official CLI bundled inside Bear 2.8+. Everything is local — no network, no auth. The MCP server (`bearcli mcp-server`) exists for MCP-only clients; agents should prefer the CLI directly: same operations, scriptable, `--format json`, zero connector setup.
+Drive the local Bear notes database through `bearcli`, the official CLI bundled inside Bear 2.8+. Everything is local — no network, no auth.
+
+**Official CLI only:** `bearcli` here means **Shiny Frog's BearCLI** bundled in Bear 2.8+ (introduced alongside the Claude Connector and MCP server: https://blog.bear.app/2026/04/bear-2-8-bearcli-claude-connector-and-mcp-server/). It is NOT `grizzly` (tylerwince/grizzly, a third-party CLI driving Bear via the x-callback-url scheme) and NOT michel-tricot's unrelated `bearcli` — see Pitfalls. Notably, OpenClaw ships a bundled `bear-notes` skill written for **grizzly** that predates BearCLI; it intentionally uses a different skill name so the two never shadow each other — prefer this one on Bear 2.8+. The MCP server (`bearcli mcp-server`) exists for MCP-only clients; agents should prefer the CLI directly: same operations, scriptable, `--format json`, zero connector setup.
 
 ## When to Use
 
@@ -128,6 +130,7 @@ Text terms, "exact phrases", negation, `#tag`, `!#tag`, `#*/tag` (any subtag), d
 ## Pitfalls
 
 - **Third-party name collision:** an unrelated PyPI/Homebrew tool (`michel-tricot/tap/bearcli`, "the missing open-source CLI") shares the name with a *completely different command set* (`note get`, `--fuzzy`, `export`). A `bearcli` found on PATH may be the wrong one. Always use the absolute app path; confirm with `--version` and `help all` if in doubt.
+- **grizzly ≠ bearcli:** `tylerwince/grizzly` is another third-party Bear CLI (Go, x-callback-url scheme, token files, callback servers) with entirely different syntax. OpenClaw's bundled `bear-notes` skill targets grizzly and predates Bear 2.8's official BearCLI — never mix their commands.
 - **Encrypted notes** (`@locked`) can be listed and searched-by-title but never read or edited — expect failures, don't retry with `--force`.
 - **Silent writes:** success prints nothing; mutating commands (except `create`) reject `--format`. Exit code is the signal.
 - **Section addresses are literal heading lines** — `# Tasks` and `## Tasks` are different sections; a wrong address fails with "No section matched the address". Copy addresses from `outline`.
