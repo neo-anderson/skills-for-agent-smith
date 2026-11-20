@@ -6,6 +6,7 @@ Skills for Agent Smith & friends — from Mr Anderson. OS, app and utility progr
 |---|---|---|
 | [`things3`](skills/things3) | Drive Things 3 on macOS via AppleScript: to-dos, projects, areas, tags | macOS + Things3 |
 | [`skill-data-sanitization`](skills/skill-data-sanitization) | Audit any agent skill for personal-data leakage and client-specific assumptions before sharing | python3 |
+| [`bear-notes`](skills/bear-notes) | Read, search, create, and edit Bear notes via the bearcli bundled in Bear 2.8+ | macOS + Bear 2.8+ |
 
 ## Install — Hermes users
 
