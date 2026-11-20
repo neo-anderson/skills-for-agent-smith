@@ -1,6 +1,6 @@
 ---
 name: bearcli
-description: Read, search, create, and edit Bear notes via Shiny Frog's official bearcli (Bear 2.8+).
+description: "Bear notes via Shiny Frog's official bearcli (Bear 2.8+)."
 version: 0.2.0
 author: neo-anderson
 license: MIT
@@ -18,7 +18,7 @@ metadata:
 
 Drive the local Bear notes database through `bearcli`, the official CLI bundled inside Bear 2.8+. Everything is local — no network, no auth.
 
-**Official CLI only:** `bearcli` here means **Shiny Frog's BearCLI** bundled in Bear 2.8+ (introduced alongside the Claude Connector and MCP server: https://blog.bear.app/2026/04/bear-2-8-bearcli-claude-connector-and-mcp-server/). It is NOT `grizzly` (tylerwince/grizzly, a third-party CLI driving Bear via the x-callback-url scheme) and NOT michel-tricot's unrelated `bearcli` — see Pitfalls. Notably, OpenClaw ships a bundled `bear-notes` skill written for **grizzly** that predates BearCLI; it intentionally uses a different skill name so the two never shadow each other — prefer this one on Bear 2.8+.
+**Official CLI only:** `bearcli` here means **Shiny Frog's BearCLI** bundled in Bear 2.8+ (introduced alongside the Claude Connector and MCP server: https://blog.bear.app/2026/04/bear-2-8-bearcli-claude-connector-and-mcp-server/). It is NOT `grizzly` (tylerwince/grizzly, a third-party CLI driving Bear via the x-callback-url scheme) and NOT michel-tricot's unrelated `bearcli` — see Pitfalls. Notably, OpenClaw ships a bundled `bear-notes` skill written for **grizzly** that predates BearCLI; it intentionally uses a different skill name so the two never shadow each other — prefer this one on Bear 2.8+. Full command reference covered below: read, search, create, edit, tags, pins, attachments.
 
 The MCP server (`bearcli mcp-server`) exists for MCP-only clients; agents should prefer the CLI directly: same operations, scriptable, `--format json`, zero connector setup.
 
