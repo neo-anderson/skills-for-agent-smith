@@ -35,8 +35,15 @@ Skills authored while probing a LIVE system/user data silently absorb personal a
    - Real ID → synthetic token of IDENTICAL shape/length/alphabet (keeps the example instructive)
    - Exact personal stat → approximate (`1,234` → `~1,200`)
    - User-data strings in examples → the source doc's own examples, or generic ones
-4. **Re-scan after patching**; clean = zero hits on harvested tokens and paths.
-5. **Agent-agnostic pass** (do whenever the skill may run outside this client): grep the skill text for client-specific assumptions and neutralize them —
+4. **Report flagged hits and WAIT for the user's decision before patching.** Print every hit grouped by file and category (see the script's output format), then for each item give a concrete recommendation and ask how to handle it — do not silently rewrite. Recommended default per category:
+   - `home-paths` → replace with a portable form (`/Users/<you>/…` → `~/<path>` or drop the path).
+   - `high-entropy` / `hex-run` → likely a real ID/token → synthetic stand-in of identical shape, OR delete the example if it carries no lesson.
+   - `exact-large-count` → often a false positive (a 4-digit year like `2026-01-01`). Flag it: if it's real user data, approximate it; if it's a benign value (a year, a version), say so and ask whether to keep it.
+   - `harvested` → real identifier present → synthetic stand-in or remove.
+   - `name!=folder` / `desc>160` → structural fix (rename folder / trim description).
+   Present the list as: `<file> — <category>: <hit>` → **recommendation: <what to do>**. Only after the user picks (or says "apply defaults") do you patch, then re-scan to confirm clean.
+5. **Re-scan after patching**; clean = zero hits on harvested tokens and paths.
+6. **Agent-agnostic pass** (do whenever the skill may run outside this client): grep the skill text for client-specific assumptions and neutralize them —
    - tool-name references (`execute_code`, `skill_manage`, `terminal(...)`, `browser_exec`, `sessions_spawn`, …) → reword to capability language ("any code-execution tool", "the skill-edit tool")
    - client paths and hub URLs (`~/.hermes/`, `~/.openclaw/`, registry links) → describe generically ("the client's skills directory")
    - tool-coupled workflows (auto-patching, memory/todo integration) → state the intent, not the tool
@@ -59,4 +66,6 @@ Skills authored while probing a LIVE system/user data silently absorb personal a
 
 ## Verification
 
-The sweep script prints `none` for every personal category on the final scan, and the harvested-token list is empty. For cross-client use, also confirm zero un-neutralized client tool names/paths and that `name` matches the folder. Only then say the skill is share-ready.
+The final scan prints `none` for every personal category and an empty harvested-token list. For cross-client use, also confirm zero un-neutralized client tool names/paths and that `name` matches the folder. Only then say the skill is share-ready.
+
+> **Interactive by design:** the sweep is a *report*, not a fixer. It prints hits and exits non-zero. You present each hit with a recommendation and wait for the user to choose (or say "apply defaults") before patching anything. Never auto-rewrite flagged content without the user's go-ahead.

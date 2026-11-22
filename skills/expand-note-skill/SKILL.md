@@ -31,7 +31,7 @@ Turn a shorthand note into a complete note and file it in the user's chosen app.
    - **Elsewhere** (a file, a vault path, a service) → handle directly or ask.
    Do not guess the destination — this is the one question that gates everything downstream.
 
-3. **Build the title.** Use the template `DATE — REFERENCE TOPICS`, where DATE is the note's date (ISO `YYYY-MM-DD`) and REFERENCE TOPICS is a comma list of the note's subjects, phrased as short human-readable topics rather than tags (e.g. `today — birthday plan, ramen with Andrew, create new Hermes skill`). Match the casing/style the user used in their shorthand.
+3. **Build the title.** Use the template `DATE — REFERENCE TOPICS`, where DATE is the note's date (ISO `YYYY-MM-DD`) and REFERENCE TOPICS is a comma list of the note's subjects, phrased as short human-readable topics rather than tags (e.g. `2026-01-01 — new year resolution, ramen with Andrew, create new Hermes skill`). Match the casing/style the user used in their shorthand.
 
 4. **Discover existing tags / topics.** Before tagging, list what already exists so you reuse the right tags instead of inventing new ones:
    - Bear: `bearcli tags list --format json` (see `bearcli` skill).
