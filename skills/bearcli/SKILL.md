@@ -131,7 +131,7 @@ When an edit touches several spots, multiple `edit --find` calls can't share sta
 1. `cat <id> --format json` to read the full note.
 2. Perform all your edits in a **Python script that writes the result to a file in `/tmp/`** (e.g. `/tmp/<slug>_new.txt`). Doing it in Python (not inline `-c`) keeps the command line short and avoids the danger-pattern matcher flagging risky-looking text inside a write payload.
 3. Review the `/tmp/` file — this is your **diff and undo backup**: if something's wrong, re-run the script or hand-edit the file and re-apply. Nothing has touched Bear yet.
-4. `bearcli overwrite <id> --content "$(cat /tmp/<slug>_new.txt)"` — no `--format`.
+4. `cat <id> --format json` to mint a fresh hash, then `bearcli overwrite <id> --base <hash> --content "$(cat /tmp/<slug>_new.txt)"` — no `--format`. (The hash is required; omitting it fails with "Note has changed since last read" even when nothing changed — mint it from the `cat` that just preceded the overwrite.)
 5. Re-`cat` the note and diff against the `/tmp/` file to confirm every change landed.
 6. **Ask the user before deleting the `/tmp/` files** — they're the only copy of the pre-edit state and the diff. Don't silently remove them; offer to.
 
