@@ -93,6 +93,10 @@ bearcli tags rename work job               # across all notes; --force merges in
 bearcli tags delete draft                  # from all notes
 ```
 
+**Tagging workflow — discover before you tag.** Before applying tags, list what already exists so you reuse the right (usually nested) tags instead of inventing new ones: `bearcli tags list --format json` (or `--title X` for one note's current tags). Match existing subtags — e.g. prefer `#me/family/Gina/marriagefix` over a flat `#marcounseling`, and a negative note's subtag (`#me/family/Gina/Negative`) over reusing a positive one (`#me/family/Gina/Fun`). For `create`, pass tags inline (`--tags "a,b/c"`); for an existing note, use `tags add <id> ...`. When the user asks to "tag with X and an existing subtag," resolve the existing subtag from the list and apply it explicitly rather than assuming.
+
+**No matches found → ask.** If none of the existing tags fit what the user asked for, don't silently invent a new tag. Surface 2–3 concrete suggestions (e.g. a flat `#gina` vs. nesting under an existing `#me/family/Gina/*`) and let the user pick — especially for new subtags, since Bear doesn't create them implicitly and a wrong nest is hard to clean up later.
+
 **Pins / location / open**
 ```bash
 bearcli pin list --format json             # every pin context; or <id> for one note
