@@ -154,9 +154,11 @@ Text terms, "exact phrases", negation, `#tag`, `!#tag`, `#*/tag` (any subtag), d
 - **Attachment protection:** `edit`/`overwrite` refuse edits that would orphan attachments. Read the rejection message; use `--force` only after the user accepts it.
 - **Confirm before destructive/broad ops:** `trash`, `overwrite`, `tags rename/delete`, `attachments delete`, `edit --all`, `pin remove`, anything with `--force`.
 - **Danger-pattern false positives:** some agent clients route command text through an approval/danger matcher before executing; risky-looking text *inside* a write payload (an updater command or `rm` usage mentioned in the note, say) can flag the whole invocation and stall it to timeout without applying the edit. Fix: write the payload to a file first, then pass it as `--insert-after "$(cat file)"` so the command line itself stays clean; always re-`cat` to confirm the write landed.
+- **`&` trips the foreground backgrounding guard:** a literal `&` in a command line (e.g. "Coloring & Painting", "$130") makes the terminal tool think you're backgrounding a process and refuses the foreground call. Write the body to a `/tmp/<slug>.md` file and pass it via `--content "$(cat /tmp/<slug>.md)"` — the `&` never reaches the command line. Same fix covers `[[wikilinks]]` getting mangled by shell history expansion when built inline.
+- **Use `[[wikilinks]]` for cross-note links:** cross-note links render as backlinks. Always prefer `See also: [[Note Title]] (<id>)` over the plain-text form. Build it in a `/tmp` file, not inline, so the `[[...]]` survives verbatim — then re-`cat` to confirm.
 - Search queries starting with `-` (e.g. `- [ ]`) parse as flags — pass them via `--query "..."`.
 - Queries need quoting; `@` mods and `#` tags break unquoted in zsh/bash (`#` starts a comment, `@` is fine but be consistent — single-quote everything).
-- `--title` matching is exact title, case-insensitive — not fuzzy; use `search` to discover titles first.
+- `--title` matching is exact title, case-insensitive — not fuzzy; use `search` to discover titles first. Exact also means an em-dash (`—`) vs hyphen (`-`) or any stray character fails it. When `--title` returns `note_not_found`, resolve by **id** from `list`/`search` (which always works) rather than guessing a title.
 - Bear must exist at `/Applications/Bear.app`; adjust if installed elsewhere (check with `mdfind "kMDItemCFBundleIdentifier == 'net.shinyfrog.bear'"`).
 
 ## Verification
